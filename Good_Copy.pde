@@ -60,9 +60,20 @@ void draw() { //Start Draw ================================================
   image(eraser, 40, 480, 75, 75);
   
   //Slider
+  tactileCircle(75, sliderY, thickness);
   line(75, 270, 75, 370);
-  circle(75, sliderY, 25);
+  fill(selectedColor);
+  circle(75, sliderY, thickness);
 
+  //New
+  tactile2(40, 425, 75, 25);
+  strokeWeight(3);
+  fill(255);
+  rect(40, 425, 75, 25);
+  fill(0);
+  textSize(20);
+  text("New", 55, 445);
+  
   //Buttons
   strokeWeight(2);
 
@@ -101,7 +112,7 @@ void draw() { //Start Draw ================================================
 } //End Draw ==============================================================
 
 void controlSlider() {
-  if (mouseX > 0 && mouseX < 150 && mouseY > 270 && mouseY < 370) {
+  if (mouseX > 20 && mouseX < 130 && mouseY > 270 && mouseY < 370) {
     sliderY = mouseY;
     
     thickness = mouseY -270;
@@ -126,8 +137,15 @@ void tactile2(int x, int y, int w, int h) {
   }
 }
 
-
-
+void tactileCircle (int x, float y, float r) {
+  if (dist(x, y, mouseX, mouseY) < r) {
+    stroke(tact);
+  } else {
+    stroke(black);
+  }
+}
+  
+  
 void mouseDragged() {
   if (pineappleOn == false) {
 
@@ -141,6 +159,15 @@ void mouseDragged() {
     image(pineapple, mouseX, mouseY, 100, 100);
   }
   controlSlider();
+
+
+    //No drawing on toolbar
+    if (mouseX > 0 && mouseX < 151 && mouseY > 0 && mouseY < 700) {
+      fill(142, 139, 139);
+      stroke (selectedColor);
+      line (pmouseX, pmouseY, mouseX, mouseY);
+    }
+    
 }
 
 void mouseReleased() { //=========================================================
@@ -149,6 +176,16 @@ void mouseReleased() { //=======================================================
     pineappleOn = !pineappleOn;
   }
 
+  //Eraser
+  if (mouseX > 40 && mouseX < 115 && mouseY > 480 && mouseY < 555) {
+    selectedColor = white;
+    pineappleOn = false; 
+  }
+  
+  //New
+  if (mouseX > 40 && mouseX < 115 && mouseY > 425 && mouseY < 450) {
+     background(white);
+  }
 
 
   //Color buttons change color
